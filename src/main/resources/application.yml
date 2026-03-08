@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: knowledge-nexus
+  datasource:
+    url: jdbc:postgresql://localhost:5432/knowledge_nexus
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Spring AI Configuration
+  ai:
+    openai:
+      # You can sign up for an API key at https://platform.openai.com/
+      # New accounts sometimes get free credits, but usually it is pay-as-you-go.
+      # If you want a FREE local alternative, we can switch to Ollama later.
+      api-key: ${OPENAI_API_KEY:sk-placeholder}
+      embedding:
+        options:
+          model: text-embedding-3-small
+      chat:
+        options:
+          model: gpt-3.5-turbo
+          temperature: 0.7
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+logging:
+  level:
+    org.springframework.ai: DEBUG
