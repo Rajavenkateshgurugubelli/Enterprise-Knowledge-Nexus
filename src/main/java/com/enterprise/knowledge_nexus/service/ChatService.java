@@ -1,6 +1,6 @@
 package com.enterprise.knowledge_nexus.service;
 
-import org.springframework.ai.chat.ChatClient;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.chat.messages.Message;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class ChatService {
 
     private final VectorStore vectorStore;
-    private final ChatClient chatClient;
+    private final ChatModel chatModel;
 
-    public ChatService(VectorStore vectorStore, ChatClient chatClient) {
+    public ChatService(VectorStore vectorStore, ChatModel chatModel) {
         this.vectorStore = vectorStore;
-        this.chatClient = chatClient;
+        this.chatModel = chatModel;
     }
 
     public String chat(String query) {
@@ -51,6 +51,6 @@ public class ChatService {
 
         // 3. Call LLM
         Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
-        return chatClient.call(prompt).getResult().getOutput().getContent();
+        return chatModel.call(prompt).getResult().getOutput().getContent();
     }
 }
